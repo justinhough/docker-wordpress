@@ -35,4 +35,4 @@ You can run WP CLI commands through the Docker container using Docker Compose an
 #### Example Commands
 
 - `docker-compose run --service-ports --rm wpcli`
-- `docker-compose run --service-ports --rm wpcli post list1
+- `docker-compose run --service-ports --rm wpcli post list1`
