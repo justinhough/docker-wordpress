@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+
+  wp:
+    image: wordpress
+    volumes:
+      - ./site:/var/www/html
+    ports:
+      - "5316:80"
+      - "443:443"
+    links:
+      - wpdb:mysql
+    depends_on:
+      - wpdb
+    environment:
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_PASSWORD: root
+
+  wpdb:
+    image: mysql:5.7
+    volumes:
+      - ./database/mysql:/var/lib/mysql
+    ports:
+      - "5317:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+  wpcli:
+    image: tatemz/wp-cli
+    volumes_from:
+      - wp
+    links:
+      - wpdb:mysql
+    entrypoint: wp
+    command: "--info"
+
+volumes:
+  database:
