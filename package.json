@@ -1,0 +1,35 @@
+{
+  "name": "docker-wordpress",
+  "version": "1.0.0",
+  "description": "Starter project for setting up Wordpress with Docker (includes WPCLI)",
+  "author": "Justin Hough <justin@justinhough.com> (https://justinhough.com)",
+  "license": "GPL-3.0",
+  "repository": "justinhough/docker-wordpress",
+  "homepage": "https://github.com/justinhough/docker-wordpress#readme",
+  "bugs": "https://github.com/justinhough/docker-wordpress/issues",
+  "files": [
+    "docker-compose.yml",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker" : "docker-compose up -d",
+    "prestart": "npm-run-series docker",
+    "start": "parallelshell 'rerun-script'"
+  },
+  "engines": {
+    "node": ">=6.3.0"
+  },
+  "devDependencies": {
+    "npm-run-series": "^1.0.0",
+    "parallelshell": "^2.0.0",
+    "rerun-script": "^0.6.0"
+  },
+  "keywords": [
+    "wordpress",
+    "docker",
+    "starter",
+    "cli",
+    "theme"
+  ]
+}
