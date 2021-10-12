@@ -17,6 +17,8 @@ services:
       WORDPRESS_DB_USER: ${DB_USER}
       WORDPRESS_DB_PASSWORD: ${DB_PASS}
       WORDPRESS_DB_NAME: ${DB_NAME}
+    networks:
+      - wpsite
     restart: unless-stopped
 
   wpdb:
@@ -30,6 +32,8 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASS}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+    networks:
+      - wpsite
     restart: unless-stopped
 
   wpcli:
@@ -39,6 +43,8 @@ services:
     links:
       - wpdb:mysql
     entrypoint: wp
+    networks:
+      - wpsite
     command: "--info"
 
   phpmyadmin:
@@ -51,9 +57,11 @@ services:
     restart: unless-stopped
     depends_on:
       - wpdb
+    networks:
+      - wpsite
+
   code-server:
     image: ghcr.io/linuxserver/code-server
-    container_name: code-server
     environment:
       - PUID=1000
       - PGID=1000
@@ -65,7 +73,12 @@ services:
       - ./web:/config/workspace
     ports:
       - ${CODE_PORT}:8443
+    networks:
+      - wpsite
     restart: unless-stopped
+
+networks:
+  wpsite:
 
 volumes:
   wp:
