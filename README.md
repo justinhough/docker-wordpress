@@ -1,4 +1,4 @@
-# Docker Wordpress
+# Docker Wordpress with code-server
 
 Docker Wordpress is a starter project to get started quickly with a fresh install of Wordpress, MySQL and WP CLI. It can be forked and customized for personal builds or for client sites.
 
@@ -21,9 +21,11 @@ brew install wp-cli
 
 ## Start Wordpress
 
-Install and start up Wordpress and MySQL with `docker-compose up -d` and stop the docker environment by using `docker-compose stop`.
+1. Duplicate `.sample-env` to `.env` and update for your application
+2. Start Wordpress, MySQL and code-server with `docker-compose up -d`. (To stop the container use `docker-compose stop`.)
+3. Open a browser `http://localhost:<port_selected>` and finish setting up Wordpress.
 
-**Note:** MySQL databases and schema for Wordpress will be automagically synced into the folder `database/mysql`
+**Note:** MySQL databases and schema for Wordpress will be automagically synced into the folder `db/mysql`
 
 
 ### Accessing WP through WP CLI

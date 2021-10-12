@@ -1,0 +1,11 @@
+WP_HTTP=5316
+WP_HTTPS=5317
+
+DB_PORT=5318
+DB_USER=docker-wordpress
+DB_PASS=docker-wordpress
+DB_NAME=wordpress
+
+CODE_PORT=5319
+CODE_PASS=sample_password
+CODE_SPASS=sample_sudo_password

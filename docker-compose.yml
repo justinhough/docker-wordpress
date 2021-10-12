@@ -1,30 +1,36 @@
-version: '2'
+version: '2.1'
 
 services:
 
   wp:
-    image: wordpress
+    image: wordpress:5.8-php7.4
     volumes:
-      - ./site:/var/www/html
+      - ./web:/var/www/html
     ports:
-      - "5316:80"
-      - "443:443"
+      - "${WP_HTTP}:80"
+      - "${WP_HTTPS}:443"
     links:
       - wpdb:mysql
     depends_on:
       - wpdb
     environment:
-      WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_DB_PASSWORD: root
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASS}
+      WORDPRESS_DB_NAME: ${DB_NAME}
+    restart: unless-stopped
 
   wpdb:
     image: mysql:5.7
     volumes:
-      - ./database/mysql:/var/lib/mysql
+      - ./db/mysql:/var/lib/mysql
     ports:
-      - "5317:3306"
+      - "${DB_PORT}:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    restart: unless-stopped
 
   wpcli:
     image: tatemz/wp-cli
@@ -35,5 +41,24 @@ services:
     entrypoint: wp
     command: "--info"
 
+  code-server:
+    image: ghcr.io/linuxserver/code-server
+    container_name: code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Boise
+      - PASSWORD=${CODE_PASS}
+      - SUDO_PASSWORD=${CODE_SPASS}
+    volumes:
+      - ./code_config:/config
+      - ./web:/config/workspace
+    ports:
+      - ${CODE_PORT}:8443
+    restart: unless-stopped
+
 volumes:
-  database:
+  wp:
+  wpdb:
+  code-server:
+  
