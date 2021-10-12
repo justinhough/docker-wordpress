@@ -6,6 +6,8 @@ DB_USER=docker-wordpress
 DB_PASS=docker-wordpress
 DB_NAME=wordpress
 
+PHPMY_PORT=5320
+
 CODE_PORT=5319
 CODE_PASS=sample_password
 CODE_SPASS=sample_sudo_password

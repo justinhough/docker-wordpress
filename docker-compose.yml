@@ -41,6 +41,16 @@ services:
     entrypoint: wp
     command: "--info"
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - '${PHPMY_PORT}:80'
+    environment:
+      PMA_HOST: wpdb
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS} 
+    restart: unless-stopped
+    depends_on:
+      - wpdb
   code-server:
     image: ghcr.io/linuxserver/code-server
     container_name: code-server
